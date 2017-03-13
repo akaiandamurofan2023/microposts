@@ -3,6 +3,7 @@ class RelationshipsController < ApplicationController
 
   def create
     @user = User.find(params[:followed_id])
+    @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc).page(params[:page]).per(5)
     current_user.follow(@user)
   end
 
